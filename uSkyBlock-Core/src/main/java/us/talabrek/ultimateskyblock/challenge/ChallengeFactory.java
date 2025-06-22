@@ -46,7 +46,9 @@ public class ChallengeFactory {
             section.getBoolean("broadcastCompletion", true),
             section.getInt("radius", 10),
             section.getBoolean("showLockedChallengeName", true),
-            section.getInt("repeatLimit", 0));
+            section.getInt("repeatLimit", 0),
+            section.getString("permission", "usb.challenges.permission-default")
+        );
     }
 
     public static Challenge createChallenge(Rank rank, ConfigurationSection section, ChallengeDefaults defaults) {
@@ -77,8 +79,10 @@ public class ChallengeFactory {
         List<String> requiredChallenges = section.getStringList("requiredChallenges");
         int offset = section.getInt("offset", 0);
         int repeatLimit = section.getInt("repeatLimit", 0);
+        String permission = section.getString("permission", defaults.permission);
+
         return new Challenge(name, displayName, description, type,
-            requiredItems, requiredBlocks, requiredEntities, requiredChallenges, section.getDouble("requiredLevel", 0d),
+            requiredItems, permission, requiredBlocks, requiredEntities, requiredChallenges, section.getDouble("requiredLevel", 0d),
             rank, resetDuration, displayItem, section.getString("tool", null), lockedItem, offset, takeItems,
             radius, reward, repeatReward, repeatLimit);
     }
@@ -124,7 +128,6 @@ public class ChallengeFactory {
             section.getInt("xp", 0),
             section.getStringList("commands"));
     }
-
 
     public static Map<String, Rank> createRankMap(ConfigurationSection ranksSection, ChallengeDefaults defaults) {
         LinkedHashMap<String, Rank> ranks = new LinkedHashMap<>();

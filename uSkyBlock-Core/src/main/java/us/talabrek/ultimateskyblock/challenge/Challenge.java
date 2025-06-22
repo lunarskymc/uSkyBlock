@@ -29,13 +29,15 @@ public class Challenge {
     public static final int MAX_LINE = 30;
 
     public enum Type {
-        PLAYER, ISLAND, ISLAND_LEVEL;
+        PLAYER, ISLAND, ISLAND_LEVEL, PERMISSION;
 
         static Type from(String s) {
             if (s == null || s.trim().isEmpty() || s.trim().equalsIgnoreCase("onplayer")) {
                 return PLAYER;
             } else if (s.equalsIgnoreCase("islandlevel")) {
                 return ISLAND_LEVEL;
+            } else if (s.equalsIgnoreCase("permission")) {
+                return PERMISSION;
             }
             return ISLAND;
         }
@@ -61,8 +63,9 @@ public class Challenge {
     private final Reward reward;
     private final Reward repeatReward;
     private final int repeatLimit;
+    private final String permission;
 
-    public Challenge(String name, String displayName, String description, Type type, List<ItemRequirement> requiredItems,
+    public Challenge(String name, String displayName, String description, Type type, List<ItemRequirement> requiredItems, String permission,
                      @NotNull List<BlockRequirement> requiredBlocks, List<EntityMatch> requiredEntities,
                      List<String> requiredChallenges, double requiredLevel, Rank rank,
                      Duration resetDuration, ItemStack displayItem, String tool, ItemStack lockedItem, int offset,
@@ -75,6 +78,7 @@ public class Challenge {
         this.requiredEntities = requiredEntities;
         this.requiredChallenges = requiredChallenges;
         this.requiredLevel = requiredLevel;
+        this.permission = permission;
         this.rank = rank;
         this.resetDuration = resetDuration;
         this.displayItem = displayItem;
@@ -111,6 +115,10 @@ public class Challenge {
 
     public int getRadius() {
         return radius;
+    }
+
+    public String getPermission() {
+        return permission;
     }
 
     public double getRequiredLevel() {
