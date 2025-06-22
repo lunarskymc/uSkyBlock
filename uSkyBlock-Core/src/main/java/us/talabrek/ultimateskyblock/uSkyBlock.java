@@ -46,6 +46,7 @@ import us.talabrek.ultimateskyblock.handler.ConfirmHandler;
 import us.talabrek.ultimateskyblock.handler.CooldownHandler;
 import us.talabrek.ultimateskyblock.handler.WorldGuardHandler;
 import us.talabrek.ultimateskyblock.hook.HookManager;
+import us.talabrek.ultimateskyblock.hook.placeholderapi.UsbExpansion;
 import us.talabrek.ultimateskyblock.imports.BlockRequirementConverter;
 import us.talabrek.ultimateskyblock.imports.ItemComponentConverter;
 import us.talabrek.ultimateskyblock.imports.USBImporterExecutor;
@@ -75,6 +76,7 @@ import us.talabrek.ultimateskyblock.util.ServerUtil;
 import us.talabrek.ultimateskyblock.uuid.PlayerDB;
 import us.talabrek.ultimateskyblock.world.WorldManager;
 
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
@@ -196,6 +198,11 @@ public class uSkyBlock extends JavaPlugin implements uSkyBlockAPI, CommandManage
 
         api = new UltimateSkyblockApi(this);
         registerApi(api);
+
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            log(Level.INFO, "Registering PlaceholderAPI expansion...");
+            new UsbExpansion(this, Path.of("plugins/uSkyBlock")).register();
+        }
 
         getScheduler().sync(() -> {
             ServerUtil.init(uSkyBlock.this);
